@@ -37,7 +37,8 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        self.items.push(value);
+        self.count += 1;
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -57,7 +58,13 @@ where
     }
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
+        if self.right_child_idx(idx) <= self.count {
+            if self.comparator(&self.items[self.left_child_idx(idx)], &self.items[self.right_child_idx(idx)]) {
+                self.left_child_idx(idx)
+            } else {
+                self.right_child_idx(idx)
+            }
+        } else if self.left_child_idx(idx) <= self.count {}
 		0
     }
 }
@@ -84,7 +91,13 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
+        if self.count > 0 {
+            let result = self.items[1].clone();
+            self.items[1] = self.items[self.count].clone();
+            self.items.pop();
+            self.count -= 1;
+            return Some(result);
+        }
 		None
     }
 }
